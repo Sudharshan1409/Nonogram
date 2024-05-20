@@ -1,0 +1,11 @@
+{
+    "debug": true,
+    "secret_key": "django-insecure-*6n0o5=3%951$8i2al_m9gr&m0u(!$cclff!4@uvud(r=lbf)n",
+    "email": "sudarshan61kv@gmail.com",
+    "password": "cxbo eoii ofkf ooss",
+    "db_name": "nonogram",
+    "db_user": "root",
+    "db_password": "Agent1409@mysql",
+    "db_host": "localhost",
+    "db_port": "3306"
+}

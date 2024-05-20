@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block title %}Create Game{% endblock title %}
+
+{% block style %}
+<style>
+.grid-container {
+    display: grid;
+    padding-right: 200px;
+    grid-template-columns: auto repeat({{ columns }}, 25px);     /* auto for the column headers */
+    grid-template-rows: auto repeat({{ rows }}, 25px);     /* auto for the column headers */
+    gap: 1px;
+    grid-auto-columns: 50px; /* Adjust this to set the width of the row headers */
+}
+
+.row-header {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-size: 16px;
+}
+
+.col-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+
+</style>
+{% endblock style %}
+
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const gridContainer = document.querySelector('.grid-container');
+    const grid = {{ grid|safe }};
+    const rows = {{ rows }};
+    const columns = {{ columns }};
+    const rowHeaders = {{ row_clues|safe }}; // Adjust as needed
+    const colHeaders = {{ column_clues|safe }}; // Adjust as needed
+    const maxRowClue = {{ max_row_clues }};
+    const maxColClue = {{ max_column_clues }};
+
+    // Create column headers
+    const emptyHeader = document.createElement('div');
+    emptyHeader.classList.add('col-header');
+    gridContainer.appendChild(emptyHeader);
+    for (let clue = 0; clue < maxColClue; clue++) {
+        if (clue !== 0) {
+            const colHeader = document.createElement('div');
+            colHeader.classList.add('col-header');
+            colHeader.textContent = " "; // Adjust as needed
+            gridContainer.appendChild(colHeader);
+        }
+        for (let col = 0; col < columns; col++) {
+            const colHeader = document.createElement('div');
+            colHeader.classList.add('col-header');
+            if (colHeaders[col][0+clue] !== undefined) {
+                colHeader.textContent = colHeaders[col][0+clue]; // Adjust as needed
+            } else {
+                colHeader.textContent = " "; // Adjust as needed
+            }
+            gridContainer.appendChild(colHeader);
+        }
+    }
+
+    // Create grid with row headers and cells
+    for (let i = 0; i < rows; i++) {
+        const rowHeader = document.createElement('div');
+        rowHeader.classList.add('row-header');
+        let text = '';
+        for (let j = 0; j < rowHeaders[i].length; j++) {
+            text += rowHeaders[i][j] + ' ';
+        }
+        rowHeader.textContent = text; // Adjust as needed
+        gridContainer.appendChild(rowHeader);
+
+        for (let j = 0; j < columns; j++) {
+            const gridItem = document.createElement('div');
+            gridItem.classList.add('grid-item');
+            gridItem.textContent = " ";
+            <!-- if (grid[i][j] === 1) { -->
+            <!--     gridItem.style.backgroundColor = '#000'; -->
+            <!-- } -->
+            gridItem.setAttribute('value', grid[i][j]);
+            gridContainer.appendChild(gridItem);
+        }
+    }
+});
+</script>
+{% endblock script %}
+
+{% block content %}
+<div class="grid-container">
+</div>
+{% endblock content %}
